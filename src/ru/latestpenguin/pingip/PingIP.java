@@ -1,5 +1,8 @@
 package ru.latestpenguin.pingip;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.logging.ConsoleHandler;
@@ -9,14 +12,29 @@ import java.util.logging.Logger;
 public class PingIP {
     public static void main(String[] args) {
         Logger logger = Logger.getLogger("MyLog");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        String ip = "127.0.0.1";
-        runPing(ip, logger);
+        String ip = null;
+        int quantity = 0;
+
+
+        try {
+            System.out.println("Введите адрес:");
+            ip = bufferedReader.readLine();
+
+            // TODO сделать ограничение по времени/дате
+            System.out.println("Сколько раз отправить запрос");
+            quantity = Integer.parseInt(bufferedReader.readLine());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        runPing(ip, logger, quantity);
 
     }
 
-    private static void runPing(String ipAddress, Logger logger) {
-        int i = 0;
+    private static void runPing(String ipAddress, Logger logger, int quantity) {
 
         SimpleDateFormat formatDaysTime = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
@@ -37,7 +55,7 @@ public class PingIP {
             System.out.println("Ping до адреса: " + ipAddress);
 
 
-            while (i < 100) {
+            while (0 < quantity) {
                 boolean status = pingIP.isReachable(2000); //Timeout = 2 second
 
                 if (status) {
@@ -45,7 +63,7 @@ public class PingIP {
                 } else {
                     logger.info("Host is not reachable");
                 }
-                i++;
+                quantity--;
             }
         }
         catch (Exception e) {
