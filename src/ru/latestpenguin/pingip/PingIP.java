@@ -41,10 +41,8 @@ public class PingIP {
                 boolean status = pingIP.isReachable(2000); //Timeout = 2 second
 
                 if (status) {
-                    //System.out.println("[" + formatDaysTime.format(System.currentTimeMillis()) + "]" + " Host is reachable ");
                     logger.info("Host is reachable");
                 } else {
-                    //System.out.println("[" + formatDaysTime.format(System.currentTimeMillis()) + "]" + " Host is not reachable");
                     logger.info("Host is not reachable");
                 }
                 i++;
